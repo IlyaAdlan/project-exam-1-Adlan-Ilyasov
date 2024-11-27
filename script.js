@@ -1,5 +1,6 @@
 import { fetchPosts } from "./account/fetchPosts.js";
 import { registerUser } from "./account/register.js";
+import { renderPosts } from "./account/fetchPosts.js";
 import { loginUser, initializeLoginForm } from "./account/login.js";
 import {
   createPost,
@@ -147,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     prevPageButton.addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage--;
-        fetchPosts(token, currentPage);
+        fetchPosts(token, currentPage); // Fetch posts with the new page
       }
     });
   }
@@ -155,11 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nextPageButton) {
     nextPageButton.addEventListener("click", () => {
       currentPage++;
-      fetchPosts(token, currentPage);
+      fetchPosts(token, currentPage); // Fetch posts with the new page
     });
   }
 
-  loadPosts();
+  fetchPosts(token, currentPage); // Initial load
 });
 
 // async function main() {

@@ -35,7 +35,8 @@ async function apiRequest(endpoint, method = "GET", token = null, body = null) {
 }
 
 export async function createPost(token, post) {
-  return await apiRequest("", "POST", token, post);
+  const endpoint = "blog/posts/hogne"; // Adjust to your user or specific endpoint
+  return await apiRequest(endpoint, "POST", token, post);
 }
 
 export async function editPost(token, postId, updatedPost) {
@@ -47,5 +48,26 @@ export async function deletePost(token, postId) {
 }
 
 export async function getPosts(token) {
-  return await apiRequest("", "GET", token);
+  const username = "hogne"; // Set your username here
+  const endpoint = `blog/posts/${username}`; // Adjust the API URL with the username
+
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      return data.data; // Return the list of posts
+    } else {
+      throw new Error(data.message || "Failed to fetch posts");
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return null;
+  }
 }
+
+// ("9c48b52c-c922-46c0-8fcf-7a9b75226f3d");

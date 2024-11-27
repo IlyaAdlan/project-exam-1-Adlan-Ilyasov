@@ -32,11 +32,26 @@ main {
 .carousel-container {
   overflow: hidden;
   width: 100%;
+  position: relative;
+  background-color: #333;
+  border-radius: 8px;
+  margin: 20px auto;
 }
 
 .carousel-content {
   display: flex;
   transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  text-align: center;
+  color: white;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  border-radius: 8px;
 }
 
 .page-login main,
@@ -70,16 +85,56 @@ form input {
 }
 
 button {
-  background-color: #007bff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  padding: 10px;
   cursor: pointer;
+  z-index: 2;
+}
+
+#prev-btn {
+  left: 10px;
+}
+
+#next-btn {
+  right: 10px;
+}
+
+button:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 
 button:hover {
   background-color: #0056b3;
+}
+
+#grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.post-item {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 #post-form {
