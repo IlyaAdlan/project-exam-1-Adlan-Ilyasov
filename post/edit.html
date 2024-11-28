@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Management</title>
     <link rel="stylesheet" href="/style.css" />
-    <script type="module" src="apiHandler.js"></script>
     <script type="module" src="/script.js"></script>
+    <script type="module" src="edit.js"></script>
   </head>
 
   <body>
@@ -42,6 +42,26 @@
           <!-- From javascript -->
         </div>
       </section>
+
+      <section id="post-grid">
+        <!-- Posts will be displayed here -->
+      </section>
+
+      <div id="edit-modal" class="hidden">
+        <form id="edit-form">
+          <label for="edit-title">Title</label>
+          <input type="text" id="edit-title" />
+
+          <label for="edit-body">Body</label>
+          <textarea id="edit-body"></textarea>
+
+          <label for="edit-media">Media URL</label>
+          <input type="url" id="edit-media" />
+
+          <button type="submit">Update Post</button>
+          <button type="button" id="close-modal">Cancel</button>
+        </form>
+      </div>
     </main>
 
     <template id="post-template">
@@ -49,10 +69,6 @@
         <img src="placeholder.jpg" alt="Post image" class="post-image" />
         <h3 class="post-title">Post Title</h3>
         <p class="post-body">Post Body content</p>
-        <div class="post-buttons">
-          <button class="edit-post">Edit</button>
-          <button class="delete-post">Delete</button>
-        </div>
       </div>
     </template>
 

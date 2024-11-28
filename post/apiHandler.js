@@ -44,12 +44,29 @@ export async function editPost(token, postId, updatedPost) {
 }
 
 export async function deletePost(token, postId) {
-  return await apiRequest(`/${postId}`, "DELETE", token);
+  const response = await fetch(
+    `https://v2.api.noroff.dev/blog/posts/hogne/${postId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error("Error deleting post:", errorData);
+    throw new Error(errorData.message || "Failed to delete post.");
+  }
+
+  // Assume successful delete without JSON response
+  return true;
 }
 
-export async function getPosts(token) {
+export async function getPosts(token, currentPage) {
   const username = "hogne"; // Set your username here
-  const endpoint = `blog/posts/${username}`; // Adjust the API URL with the username
+  const endpoint = `blog/posts/${username}?page=${currentPage}`; // Adjust the API URL with the username
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -69,5 +86,3 @@ export async function getPosts(token) {
     return null;
   }
 }
-
-// ("9c48b52c-c922-46c0-8fcf-7a9b75226f3d");
