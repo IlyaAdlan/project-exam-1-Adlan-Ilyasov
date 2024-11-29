@@ -10,47 +10,43 @@ import {
 } from "./post/apiHandler.js";
 
 let currentPage = 1;
-const postsContainer = (document.getElementByI = 1);
+const postsContainer = document.getElementById("post-grid");
 let token = localStorage.getItem("token");
 
 // Function to load posts
 async function loadPosts() {
-  const postsContainer = document.getElementById("posts-container");
-  if (!postsContainer) return;
+  const postsGrid = document.getElementById("post-grid");
+  if (!postsGrid) return;
 
-  postsContainer.innerHTML = "<p>Loading...</p>";
-  const postsData = await fetchPosts(token, currentPage); // Fetch posts data
+  postsGrid.innerHTML = "<p>Loading...</p>";
+  const postsData = await fetchPosts(token, currentPage);
 
   if (postsData && postsData.data) {
-    postsContainer.innerHTML = ""; // Clear loading message
+    postsGrid.innerHTML = ""; // Clear loading message
     postsData.data.forEach((post) => {
       const postElement = document.createElement("div");
       postElement.classList.add("post-item");
+
       postElement.innerHTML = `
         <img src="${
           post.media?.url || "placeholder.jpg"
         }" alt="Post image" class="post-image" />
         <h3>${post.title}</h3>
-        <p>${post.body}</p>
-        <div class="post-buttons">
-          <button class="edit-post" data-id="${post.id}">Edit</button>
-          <button class="delete-post" data-id="${post.id}">Delete</button>
-        </div>
+        <p>${post.body.slice(0, 100)}...</p>
+        ${
+          window.location.pathname.includes("edit.html")
+            ? `<div class="post-buttons">
+                 <button class="edit-button" data-id="${post.id}">Edit</button>
+                 <button class="delete-button" data-id="${post.id}">Delete</button>
+               </div>`
+            : `<a href="post.html?id=${post.id}" class="read-more-button">Read More</a>`
+        }
       `;
-      postsContainer.appendChild(postElement); // Append post to container
+
+      postsGrid.appendChild(postElement);
     });
-
-    // Attach event listeners for buttons
-    document
-      .querySelectorAll(".edit-post")
-      .forEach((button) => button.addEventListener("click", handleEdit));
-    document
-      .querySelectorAll(".delete-post")
-      .forEach((button) => button.addEventListener("click", handleDelete));
-
-    updatePagination(postsData.meta); // Update pagination after rendering posts
   } else {
-    postsContainer.innerHTML = "<p>No posts found.</p>";
+    postsGrid.innerHTML = "<p>No posts found.</p>";
   }
 }
 
@@ -77,7 +73,6 @@ async function handlePostCreation(event) {
   }
 }
 
-// Handle editing a post
 async function handleEdit(event) {
   const postId = event.target.dataset.id;
   const title = prompt("Enter new title:");
@@ -103,6 +98,11 @@ async function handleEdit(event) {
     alert("Failed to update post.");
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  initCarousel(token);
+});
 
 // Handle deleting a post
 async function handleDelete(event) {

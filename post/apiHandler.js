@@ -40,7 +40,8 @@ export async function createPost(token, post) {
 }
 
 export async function editPost(token, postId, updatedPost) {
-  return await apiRequest(`/${postId}`, "PUT", token, updatedPost);
+  const endpoint = `blog/posts/hogne/${postId}`; // Fix endpoint to include the correct path
+  return await apiRequest(endpoint, "PUT", token, updatedPost);
 }
 
 export async function deletePost(token, postId) {

@@ -1,13 +1,33 @@
-export async function initCarousel() {
+import { fetchPosts } from "./fetchPosts.js"; // Adjust the import path if needed
+
+export async function initCarousel(token) {
   const carousel = document.querySelector(".carousel-container");
-  const carouselContent = carousel.querySelector(".carousel-content");
-  const items = carousel.querySelectorAll(".carousel-item");
+  const carouselContent = carousel.querySelector("#carousel-content");
 
   let currentIndex = 0;
 
+  // Fetch posts dynamically
+  const postsData = await fetchPosts(token, 1);
+  const posts = postsData?.data.slice(0, 3); // Get the 3 latest posts
+
+  if (posts) {
+    // Populate carousel with posts
+    posts.forEach((post) => {
+      const carouselItem = document.createElement("div");
+      carouselItem.classList.add("carousel-item");
+      carouselItem.innerHTML = `
+        <img src="${post.media?.url || "placeholder.jpg"}" alt="${post.title}">
+        <h3>${post.title}</h3>
+        <p>${post.body}</p>
+        <a href="post.html?id=${post.id}" class="read-more">Read More</a>
+      `;
+      carouselContent.appendChild(carouselItem);
+    });
+  }
+
   // Function to move the carousel to the next item
   function moveToNext() {
-    if (currentIndex < items.length - 1) {
+    if (currentIndex < posts.length - 1) {
       currentIndex++;
     } else {
       currentIndex = 0; // Loop back to the first item
@@ -20,7 +40,7 @@ export async function initCarousel() {
     if (currentIndex > 0) {
       currentIndex--;
     } else {
-      currentIndex = items.length - 1; // Loop back to the last item
+      currentIndex = posts.length - 1; // Loop back to the last item
     }
     updateCarouselPosition();
   }
@@ -38,6 +58,6 @@ export async function initCarousel() {
   prevButton.addEventListener("click", moveToPrev);
   nextButton.addEventListener("click", moveToNext);
 
-  // Optionally, you can also add auto-rotation
-  setInterval(moveToNext, 3000); // Auto move every 3 seconds
+  // Auto-rotation (optional)
+  setInterval(moveToNext, 3000);
 }
