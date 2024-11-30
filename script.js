@@ -26,22 +26,32 @@ async function loadPosts() {
     postsData.data.forEach((post) => {
       const postElement = document.createElement("div");
       postElement.classList.add("post-item");
-
       postElement.innerHTML = `
         <img src="${
           post.media?.url || "placeholder.jpg"
         }" alt="Post image" class="post-image" />
         <h3>${post.title}</h3>
-        <p>${post.body.slice(0, 100)}...</p>
-        ${
-          window.location.pathname.includes("edit.html")
-            ? `<div class="post-buttons">
-                 <button class="edit-button" data-id="${post.id}">Edit</button>
-                 <button class="delete-button" data-id="${post.id}">Delete</button>
-               </div>`
-            : `<a href="post.html?id=${post.id}" class="read-more-button">Read More</a>`
-        }
+        <p>${post.body}</p>
       `;
+
+      // Add buttons only on 'edit.html'
+      if (window.location.pathname.includes("edit.html")) {
+        const buttons = document.createElement("div");
+        buttons.classList.add("post-buttons");
+        buttons.innerHTML = `
+          <button class="edit-post" data-id="${post.id}">Edit</button>
+          <button class="delete-post" data-id="${post.id}">Delete</button>
+        `;
+        postElement.appendChild(buttons);
+
+        // Attach button listeners
+        buttons
+          .querySelector(".edit-post")
+          .addEventListener("click", handleEdit);
+        buttons
+          .querySelector(".delete-post")
+          .addEventListener("click", handleDelete);
+      }
 
       postsGrid.appendChild(postElement);
     });
