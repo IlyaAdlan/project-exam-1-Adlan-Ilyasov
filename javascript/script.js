@@ -112,10 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
     editButton.addEventListener("click", () => {
       const token = localStorage.getItem("token");
       if (token) {
-        window.location.href = "../post/edit.html";
+        window.location.href = "./post/edit.html";
       } else {
         alert("You need to be logged in to edit posts.");
-        window.location.href = "../login.html";
+        window.location.href = "login.html";
       }
     });
   }
