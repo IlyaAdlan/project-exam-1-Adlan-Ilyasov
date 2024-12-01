@@ -18,7 +18,7 @@ export async function initCarousel(token) {
       carouselItem.innerHTML = `
         <img src="${post.media?.url || "placeholder.jpg"}" alt="${post.title}">
         <h3>${post.title}</h3>
-        <p>${post.body}</p>
+        
       `;
       carouselContent.appendChild(carouselItem);
     });
