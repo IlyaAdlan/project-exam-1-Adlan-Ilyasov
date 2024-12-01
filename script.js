@@ -105,14 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
     editButton.addEventListener("click", () => {
       const token = localStorage.getItem("token");
       if (token) {
-        window.location.href = "/post/edit.html"; // Adjust path if necessary
+        window.location.href = "/post/edit.html"; // Go to the edit page
       } else {
         alert("You need to be logged in to edit posts.");
-        window.location.href = "/login-register/login.html";
+        window.location.href = "/login-register/login.html"; // Redirect to login page
       }
     });
-  } else {
-    console.error("Edit button not found.");
   }
 
   const prevPageButton = document.getElementById("prev-page");

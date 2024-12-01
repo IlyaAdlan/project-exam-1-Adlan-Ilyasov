@@ -2,9 +2,17 @@ import { editPost } from "./apiHandler.js";
 import { showToast } from "../script.js";
 
 document.addEventListener("click", (event) => {
+  const token = localStorage.getItem("token");
+
+  // Check if the user is logged in
+  if (!token) {
+    alert("You need to be logged in to edit posts.");
+    window.location.href = "/login-register/login.html"; // Redirect to login page
+    return;
+  }
+
   if (event.target.classList.contains("edit-post")) {
     const postId = event.target.dataset.id;
-
     const postElement = event.target.closest(".post-item");
     if (!postElement) return;
 
@@ -52,7 +60,6 @@ if (editForm) {
 
       if (response) {
         showToast("Post updated successfully!");
-        loadPosts(); // You can remove this if you want the page to refresh immediately
         modal.classList.add("hidden");
         location.reload(); // Refresh the page after successful update
       } else {
