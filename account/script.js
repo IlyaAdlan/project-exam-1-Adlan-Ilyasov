@@ -37,7 +37,7 @@ async function loadPosts() {
       postElement.classList.add("post-item");
 
       const postLink = document.createElement("a");
-      postLink.href = `post.html?id=${post.id}`;
+      postLink.href = `./post.html?id=${post.id}`;
       postLink.classList.add("post-link");
 
       const postImage = document.createElement("img");
