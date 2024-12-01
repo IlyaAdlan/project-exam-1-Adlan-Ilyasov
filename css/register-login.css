@@ -22,6 +22,10 @@ header nav a:hover {
   text-decoration: underline;
 }
 
+.logo {
+  width: 40px;
+}
+
 main {
   display: flex;
   justify-content: center;

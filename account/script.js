@@ -36,8 +36,9 @@ async function loadPosts() {
       const postElement = document.createElement("div");
       postElement.classList.add("post-item");
 
+      // Post Link and Image
       const postLink = document.createElement("a");
-      postLink.href = `./post.html?id=${post.id}`;
+      postLink.href = `post.html?id=${post.id}`;
       postLink.classList.add("post-link");
 
       const postImage = document.createElement("img");
@@ -48,11 +49,25 @@ async function loadPosts() {
       postLink.appendChild(postImage);
       postElement.appendChild(postLink);
 
+      // Post Title
       const title = document.createElement("h3");
       title.innerText = post.title;
 
-      postElement.appendChild(title);
+      // Author and Publication Date
+      const author = post.author?.name || "Unknown Author";
+      const pubDate = new Date(post.created).toLocaleDateString();
 
+      const authorElement = document.createElement("p");
+      authorElement.innerText = `Author: ${author}`;
+
+      const pubDateElement = document.createElement("p");
+      pubDateElement.innerText = `Published on: ${pubDate}`;
+
+      postElement.appendChild(title);
+      postElement.appendChild(authorElement);
+      postElement.appendChild(pubDateElement);
+
+      // Edit/Delete Buttons
       if (token && window.location.pathname.includes("edit.html")) {
         const buttons = document.createElement("div");
         buttons.classList.add("post-buttons");
