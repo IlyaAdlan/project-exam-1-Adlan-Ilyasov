@@ -1,4 +1,4 @@
-import { fetchPosts } from "./fetchPosts.js"; // Adjust the import path if needed
+import { fetchPosts } from "./fetchPosts.js";
 
 export async function initCarousel(token) {
   const carousel = document.querySelector(".carousel-container");
@@ -6,12 +6,10 @@ export async function initCarousel(token) {
 
   let currentIndex = 0;
 
-  // Fetch posts dynamically
   const postsData = await fetchPosts(token, 1);
-  const posts = postsData?.data.slice(0, 3); // Get the 3 latest posts
+  const posts = postsData?.data.slice(0, 3);
 
   if (posts) {
-    // Populate carousel with posts
     posts.forEach((post) => {
       const carouselItem = document.createElement("div");
       carouselItem.classList.add("carousel-item");
@@ -24,39 +22,34 @@ export async function initCarousel(token) {
     });
   }
 
-  // Function to move the carousel to the next item
   function moveToNext() {
     if (currentIndex < posts.length - 1) {
       currentIndex++;
     } else {
-      currentIndex = 0; // Loop back to the first item
+      currentIndex = 0;
     }
     updateCarouselPosition();
   }
 
-  // Function to move the carousel to the previous item
   function moveToPrev() {
     if (currentIndex > 0) {
       currentIndex--;
     } else {
-      currentIndex = posts.length - 1; // Loop back to the last item
+      currentIndex = posts.length - 1;
     }
     updateCarouselPosition();
   }
 
-  // Update the carousel content position
   function updateCarouselPosition() {
-    const offset = -currentIndex * 100; // Move the content based on the current index
+    const offset = -currentIndex * 100;
     carouselContent.style.transform = `translateX(${offset}%)`;
   }
 
-  // Initialize navigation buttons
   const prevButton = carousel.querySelector("#prev-btn");
   const nextButton = carousel.querySelector("#next-btn");
 
   prevButton.addEventListener("click", moveToPrev);
   nextButton.addEventListener("click", moveToNext);
 
-  // Auto-rotation (optional)
   setInterval(moveToNext, 3000);
 }

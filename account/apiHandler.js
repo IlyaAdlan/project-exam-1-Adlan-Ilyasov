@@ -11,7 +11,7 @@ async function apiRequest(endpoint, method = "GET", token = null, body = null) {
   const options = {
     method,
     headers,
-    ...(body && { body: JSON.stringify(body) }), // Add body only if provided
+    ...(body && { body: JSON.stringify(body) }),
   };
 
   try {
@@ -35,12 +35,12 @@ async function apiRequest(endpoint, method = "GET", token = null, body = null) {
 }
 
 export async function createPost(token, post) {
-  const endpoint = "blog/posts/hogne"; // Adjust to your user or specific endpoint
+  const endpoint = "blog/posts/hogne";
   return await apiRequest(endpoint, "POST", token, post);
 }
 
 export async function editPost(token, postId, updatedPost) {
-  const endpoint = `blog/posts/hogne/${postId}`; // Fix endpoint to include the correct path
+  const endpoint = `blog/posts/hogne/${postId}`;
   return await apiRequest(endpoint, "PUT", token, updatedPost);
 }
 
@@ -61,13 +61,12 @@ export async function deletePost(token, postId) {
     throw new Error(errorData.message || "Failed to delete post.");
   }
 
-  // Assume successful delete without JSON response
   return true;
 }
 
 export async function getPosts(token, currentPage) {
-  const username = "hogne"; // Set your username here
-  const endpoint = `blog/posts/${username}?page=${currentPage}`; // Adjust the API URL with the username
+  const username = "hogne";
+  const endpoint = `blog/posts/${username}?page=${currentPage}`;
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -78,7 +77,7 @@ export async function getPosts(token, currentPage) {
 
     const data = await response.json();
     if (response.ok) {
-      return data.data; // Return the list of posts
+      return data.data;
     } else {
       throw new Error(data.message || "Failed to fetch posts");
     }

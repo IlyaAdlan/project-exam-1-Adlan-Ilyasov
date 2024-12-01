@@ -19,7 +19,7 @@ async function fetchPostById(postId) {
     return null;
   }
   const data = await response.json();
-  console.log("Fetched Post Data:", data); // Log the fetched data to ensure it's correct
+  console.log("Fetched Post Data:", data);
   return data;
 }
 
@@ -27,10 +27,8 @@ async function loadPost() {
   const postData = await fetchPostById(postId);
 
   if (postData) {
-    // Log post data
     console.log("Fetched Post Data:", postData);
 
-    // Update HTML elements with fetched post data
     document.getElementById("post-title").innerText = postData.data.title;
     document.getElementById("post-body").innerText = postData.data.body;
     document.getElementById("post-image").src =
@@ -44,5 +42,5 @@ async function loadPost() {
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Page Loaded");
-  loadPost(); // Ensure this is called
+  loadPost();
 });

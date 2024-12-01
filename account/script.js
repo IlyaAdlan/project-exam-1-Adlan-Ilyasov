@@ -1,4 +1,3 @@
-// Import necessary modules
 import { initCarousel } from "./carousel.js";
 import { fetchPosts } from "./fetchPosts.js";
 import { registerUser } from "./register.js";
@@ -9,7 +8,6 @@ let currentPage = 1;
 const postsContainer = document.getElementById("post-grid");
 let token = localStorage.getItem("token");
 
-// Function to handle post deletion
 async function handleDelete(event) {
   const postId = event.target.dataset.id;
 
@@ -18,14 +16,13 @@ async function handleDelete(event) {
     const response = await deletePost(token, postId);
     if (response) {
       showToast("Post deleted successfully!");
-      loadPosts(); // Reload the posts after deletion
+      loadPosts();
     } else {
       showToast("Failed to delete post.");
     }
   }
 }
 
-// Function to load posts
 async function loadPosts() {
   const postsGrid = document.getElementById("post-grid");
   if (!postsGrid) return;
@@ -40,7 +37,7 @@ async function loadPosts() {
       postElement.classList.add("post-item");
 
       const postLink = document.createElement("a");
-      postLink.href = `/post/post.html?id=${post.id}`;
+      postLink.href = `/post.html?id=${post.id}`;
       postLink.classList.add("post-link");
 
       const postImage = document.createElement("img");
@@ -56,7 +53,6 @@ async function loadPosts() {
 
       postElement.appendChild(title);
 
-      // Check if user is logged in before showing edit/delete buttons
       if (token && window.location.pathname.includes("edit.html")) {
         const buttons = document.createElement("div");
         buttons.classList.add("post-buttons");
@@ -78,7 +74,6 @@ async function loadPosts() {
   }
 }
 
-// Toast notification function
 export function showToast(message) {
   const toast = document.createElement("div");
   toast.classList.add("toast");
@@ -93,9 +88,7 @@ export function showToast(message) {
   }
 }
 
-// Event listeners for the Edit button and pagination buttons
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize carousel if present
   if (document.querySelector(".carousel-container")) {
     initCarousel(token);
   }
@@ -105,10 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
     editButton.addEventListener("click", () => {
       const token = localStorage.getItem("token");
       if (token) {
-        window.location.href = "/post/edit.html"; // Go to the edit page
+        window.location.href = "edit.html";
       } else {
         alert("You need to be logged in to edit posts.");
-        window.location.href = "/login-register/login.html"; // Redirect to login page
+        window.location.href = "login.html";
       }
     });
   }
@@ -136,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeLoginForm();
 });
 
-// Event listener for the registration form
 document
   .getElementById("register-form")
   ?.addEventListener("submit", async (event) => {

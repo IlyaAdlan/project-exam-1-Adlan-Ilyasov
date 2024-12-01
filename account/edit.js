@@ -4,10 +4,9 @@ import { showToast } from "./script.js";
 document.addEventListener("click", (event) => {
   const token = localStorage.getItem("token");
 
-  // Check if the user is logged in
   if (!token) {
     alert("You need to be logged in to edit posts.");
-    window.location.href = "/login-register/login.html"; // Redirect to login page
+    window.location.href = "/login-register/login.html";
     return;
   }
 
@@ -61,7 +60,7 @@ if (editForm) {
       if (response) {
         showToast("Post updated successfully!");
         modal.classList.add("hidden");
-        location.reload(); // Refresh the page after successful update
+        location.reload();
       } else {
         showToast("Failed to update post.");
       }
