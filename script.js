@@ -3,29 +3,11 @@ import { initCarousel } from "./account/carousel.js";
 import { fetchPosts } from "./account/fetchPosts.js";
 import { registerUser } from "./account/register.js";
 import { loginUser, initializeLoginForm } from "./account/login.js";
-import { createPost, deletePost, getPosts } from "./post/apiHandler.js";
+import { createPost, deletePost } from "./post/apiHandler.js";
 
 let currentPage = 1;
 const postsContainer = document.getElementById("post-grid");
 let token = localStorage.getItem("token");
-
-// Event listener for the Edit button in the navbar
-const editButton = document.getElementById("edit-button"); // Replace with your actual button's ID
-if (editButton) {
-  editButton.addEventListener("click", () => {
-    const token = localStorage.getItem("token");
-
-    // Check if the token is valid
-    if (token) {
-      // If valid, redirect to the edit page
-      window.location.href = "/post/edit.html"; // Adjust path if necessary
-    } else {
-      // If not valid, show an access message or redirect to login page
-      alert("You need to be logged in to edit posts.");
-      window.location.href = "/account/login.html"; // Redirect to login page
-    }
-  });
-}
 
 // Function to handle post deletion
 async function handleDelete(event) {
@@ -75,7 +57,6 @@ async function loadPosts() {
       postElement.appendChild(title);
 
       // Check if user is logged in before showing edit/delete buttons
-      const token = localStorage.getItem("token");
       if (token && window.location.pathname.includes("edit.html")) {
         const buttons = document.createElement("div");
         buttons.classList.add("post-buttons");
@@ -97,10 +78,41 @@ async function loadPosts() {
   }
 }
 
-// Event listeners for pagination buttons
+// Toast notification function
+export function showToast(message) {
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+  toast.innerText = message;
+
+  const toastContainer = document.getElementById("toast-container");
+  if (toastContainer) {
+    toastContainer.appendChild(toast);
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+}
+
+// Event listeners for the Edit button and pagination buttons
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize carousel if present
   if (document.querySelector(".carousel-container")) {
     initCarousel(token);
+  }
+
+  const editButton = document.getElementById("edit-button");
+  if (editButton) {
+    editButton.addEventListener("click", () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        window.location.href = "/post/edit.html"; // Adjust path if necessary
+      } else {
+        alert("You need to be logged in to edit posts.");
+        window.location.href = "/login-register/login.html";
+      }
+    });
+  } else {
+    console.error("Edit button not found.");
   }
 
   const prevPageButton = document.getElementById("prev-page");
@@ -126,17 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeLoginForm();
 });
 
-// Toast notification function
-export function showToast(message) {
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
-  toast.innerText = message;
+// Event listener for the registration form
+document
+  .getElementById("register-form")
+  ?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-  const toastContainer = document.getElementById("toast-container");
-  if (toastContainer) {
-    toastContainer.appendChild(toast);
-    setTimeout(() => {
-      toast.remove();
-    }, 3000);
-  }
-}
+    await registerUser(name, email, password);
+  });
