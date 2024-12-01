@@ -1,12 +1,44 @@
-import { editPost } from "./apiHandler.js";
+import { createPost, editPost } from "./apiHandler.js";
 import { showToast } from "./script.js";
 
+// Handle the creation of a new post
+document
+  .getElementById("post-form")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent page reload
+
+    const title = document.getElementById("post-title").value;
+    const body = document.getElementById("post-body").value;
+    const media = document.getElementById("post-media").value;
+
+    const post = {
+      title,
+      body,
+      media: { url: media },
+    };
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      const response = await createPost(token, post);
+      if (response) {
+        showToast("Post created successfully!");
+        window.location.href = "../index.html"; // Redirect after creation
+      } else {
+        showToast("Failed to create post.");
+      }
+    } else {
+      alert("You need to be logged in to create posts.");
+      window.location.href = "../login.html";
+    }
+  });
+
+// Edit post functionality
 document.addEventListener("click", (event) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
     alert("You need to be logged in to edit posts.");
-    window.location.href = "/login-register/login.html";
+    window.location.href = "../login.html";
     return;
   }
 
@@ -35,10 +67,12 @@ document.addEventListener("click", (event) => {
   }
 });
 
+// Handle post update
 const editForm = document.getElementById("edit-form");
 if (editForm) {
   editForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
     const modal = document.getElementById("edit-modal");
     if (!modal) return;
 
@@ -60,7 +94,7 @@ if (editForm) {
       if (response) {
         showToast("Post updated successfully!");
         modal.classList.add("hidden");
-        location.reload();
+        location.reload(); // Optionally, refresh the page
       } else {
         showToast("Failed to update post.");
       }
@@ -68,6 +102,7 @@ if (editForm) {
   });
 }
 
+// Close edit modal
 const closeModal = document.getElementById("close-modal");
 if (closeModal) {
   closeModal.addEventListener("click", () => {
