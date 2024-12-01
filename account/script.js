@@ -1,9 +1,9 @@
 // Import necessary modules
-import { initCarousel } from "./account/carousel.js";
-import { fetchPosts } from "./account/fetchPosts.js";
-import { registerUser } from "./account/register.js";
-import { loginUser, initializeLoginForm } from "./account/login.js";
-import { createPost, deletePost } from "./post/apiHandler.js";
+import { initCarousel } from "./carousel.js";
+import { fetchPosts } from "./fetchPosts.js";
+import { registerUser } from "./register.js";
+import { loginUser, initializeLoginForm } from "./login.js";
+import { createPost, deletePost } from "./apiHandler.js";
 
 let currentPage = 1;
 const postsContainer = document.getElementById("post-grid");

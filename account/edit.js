@@ -1,5 +1,5 @@
 import { editPost } from "./apiHandler.js";
-import { showToast } from "../script.js";
+import { showToast } from "./script.js";
 
 document.addEventListener("click", (event) => {
   const token = localStorage.getItem("token");

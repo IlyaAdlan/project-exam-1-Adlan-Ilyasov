@@ -1,4 +1,4 @@
-import { deletePost } from "/post/apiHandler.js";
+import { deletePost } from "./apiHandler.js";
 
 export async function fetchPosts(token, currentPage) {
   const name = "hogne"; // Set your username manually or get it from localStorage
