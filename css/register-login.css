@@ -80,3 +80,13 @@ footer {
   margin: 0;
   line-height: 1.6;
 }
+
+@media (max-width: 480px) {
+  footer {
+    width: 100%;
+  }
+
+  .footer-content p {
+    font-size: 25px;
+  }
+}

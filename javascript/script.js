@@ -38,7 +38,7 @@ async function loadPosts() {
 
       // Post Link and Image
       const postLink = document.createElement("a");
-      postLink.href = `post.html?id=${post.id}`;
+      postLink.href = `post/post.html?id=${post.id}`;
       postLink.classList.add("post-link");
 
       const postImage = document.createElement("img");
@@ -67,8 +67,7 @@ async function loadPosts() {
       postElement.appendChild(authorElement);
       postElement.appendChild(pubDateElement);
 
-      // Edit/Delete Buttons
-      if (token && window.location.pathname.includes("edit.html")) {
+      if (token && window.location.pathname.includes("/post/edit.html")) {
         const buttons = document.createElement("div");
         buttons.classList.add("post-buttons");
         buttons.innerHTML = `
@@ -113,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editButton.addEventListener("click", () => {
       const token = localStorage.getItem("token");
       if (token) {
-        window.location.href = "edit.html";
+        window.location.href = "/post/edit.html";
       } else {
         alert("You need to be logged in to edit posts.");
         window.location.href = "login.html";
