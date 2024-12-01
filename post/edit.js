@@ -1,53 +1,73 @@
 import { editPost } from "./apiHandler.js";
+import { showToast } from "../script.js";
 
-// Open Edit Modal
 document.addEventListener("click", (event) => {
   if (event.target.classList.contains("edit-post")) {
     const postId = event.target.dataset.id;
 
-    // Fetch post data (optional, if already available on the page)
     const postElement = event.target.closest(".post-item");
-    const currentTitle = postElement.querySelector("h3").textContent;
-    const currentBody = postElement.querySelector("p").textContent;
-    const currentMedia = postElement.querySelector("img").src;
+    if (!postElement) return;
 
-    // Populate the modal
-    document.getElementById("edit-title").value = currentTitle;
-    document.getElementById("edit-body").value = currentBody;
-    document.getElementById("edit-media").value = currentMedia;
-    document.getElementById("edit-modal").dataset.postId = postId;
+    const currentTitle = postElement.querySelector("h3")?.textContent || "";
+    const currentBody = postElement.querySelector("p")?.textContent || "";
+    const currentMedia = postElement.querySelector("img")?.src || "";
 
-    // Show the modal
-    document.getElementById("edit-modal").classList.remove("hidden");
+    const titleInput = document.getElementById("edit-title");
+    const bodyInput = document.getElementById("edit-body");
+    const mediaInput = document.getElementById("edit-media");
+    const modal = document.getElementById("edit-modal");
+
+    if (titleInput && bodyInput && mediaInput && modal) {
+      titleInput.value = currentTitle;
+      bodyInput.value = currentBody;
+      mediaInput.value = currentMedia;
+      modal.dataset.postId = postId;
+
+      modal.classList.remove("hidden");
+    }
   }
 });
 
-// Handle Form Submission
-document
-  .getElementById("edit-form")
-  .addEventListener("submit", async (event) => {
+const editForm = document.getElementById("edit-form");
+if (editForm) {
+  editForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const postId = document.getElementById("edit-modal").dataset.postId;
+    const modal = document.getElementById("edit-modal");
+    if (!modal) return;
 
-    const updatedPost = {
-      title: document.getElementById("edit-title").value,
-      body: document.getElementById("edit-body").value,
-      media: { url: document.getElementById("edit-media").value },
-    };
+    const postId = modal.dataset.postId;
+    const titleInput = document.getElementById("edit-title");
+    const bodyInput = document.getElementById("edit-body");
+    const mediaInput = document.getElementById("edit-media");
 
-    const token = localStorage.getItem("token");
-    const response = await editPost(token, postId, updatedPost);
+    if (titleInput && bodyInput && mediaInput) {
+      const updatedPost = {
+        title: titleInput.value,
+        body: bodyInput.value,
+        media: { url: mediaInput.value },
+      };
 
-    if (response) {
-      alert("Post updated successfully!");
-      loadPosts(); // Refresh the posts
-      document.getElementById("edit-modal").classList.add("hidden");
-    } else {
-      alert("Failed to update post.");
+      const token = localStorage.getItem("token");
+      const response = await editPost(token, postId, updatedPost);
+
+      if (response) {
+        showToast("Post updated successfully!");
+        loadPosts(); // You can remove this if you want the page to refresh immediately
+        modal.classList.add("hidden");
+        location.reload(); // Refresh the page after successful update
+      } else {
+        showToast("Failed to update post.");
+      }
     }
   });
+}
 
-// Close Modal
-document.getElementById("close-modal").addEventListener("click", () => {
-  document.getElementById("edit-modal").classList.add("hidden");
-});
+const closeModal = document.getElementById("close-modal");
+if (closeModal) {
+  closeModal.addEventListener("click", () => {
+    const modal = document.getElementById("edit-modal");
+    if (modal) {
+      modal.classList.add("hidden");
+    }
+  });
+}

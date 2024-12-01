@@ -35,6 +35,7 @@ export function initializeLoginForm() {
       if (token) {
         localStorage.setItem("token", token);
         alert("Login successful");
+        localStorage.setItem("loggedIn", true);
       } else {
         alert("Login failed. Please check your credentials.");
       }

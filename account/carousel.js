@@ -19,7 +19,6 @@ export async function initCarousel(token) {
         <img src="${post.media?.url || "placeholder.jpg"}" alt="${post.title}">
         <h3>${post.title}</h3>
         <p>${post.body}</p>
-        <a href="post.html?id=${post.id}" class="read-more">Read More</a>
       `;
       carouselContent.appendChild(carouselItem);
     });

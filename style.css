@@ -18,6 +18,20 @@ header {
   text-align: center;
 }
 
+footer {
+  background-color: #2c2c2c;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+  font-style: italic;
+}
+
+.footer-content p {
+  font-size: 50px;
+  margin: 0;
+  line-height: 1.6;
+}
+
 nav a {
   color: white;
   margin: 0 15px;
@@ -80,7 +94,21 @@ main {
   border-radius: 8px;
 }
 
-/* Forms */
+.explore-section {
+  background-color: #000;
+  color: white;
+  text-align: center;
+  padding: 40px 0;
+  font-style: italic;
+  margin-top: 50px;
+}
+
+.explore-section p {
+  font-size: 90px;
+  font-weight: bold;
+  margin: 0;
+}
+
 .page-login main,
 .page-register main {
   display: flex;
@@ -163,6 +191,7 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
+  overflow: visible;
 }
 
 .post-item {
@@ -171,10 +200,11 @@ button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-height: 250px;
-  display: flex;
+  height: auto;
+  display: block;
   flex-direction: column;
   justify-content: flex-start;
+  text-align: center;
 }
 
 .post-item:hover {
@@ -197,9 +227,9 @@ a {
 
 .post-item p {
   margin-top: 10px;
-  white-space: normal;
   overflow: visible;
-  text-overflow: ellipsis;
+  text-overflow: unset;
+  white-space: normal;
 }
 
 .post-item img {
@@ -210,6 +240,7 @@ a {
   border-radius: 5px;
   object-fit: cover;
   max-height: 250px;
+  display: inline-block;
 }
 
 #manage-posts {
@@ -269,6 +300,40 @@ a {
   z-index: 1000;
 }
 
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  color: white;
+  background-color: green;
+  opacity: 0.9;
+  animation: fadeOut 3s forwards;
+}
+
+.toast-error {
+  background-color: red;
+}
+
+.toast-success {
+  background-color: green;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .post-buttons {
   display: flex;
   gap: 10px;
@@ -320,7 +385,41 @@ button[type="submit"] {
   margin-top: 20px;
 }
 
-/* Media Queries */
+#post-content {
+  background-color: #fff;
+  padding: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+#post-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#post-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 20px;
+}
+
+#post-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-top: 20px;
+  text-align: justify;
+  overflow: auto;
+  height: auto;
+}
+
 @media (max-width: 768px) {
   #post-container {
     flex-direction: column;
@@ -350,6 +449,6 @@ button[type="submit"] {
   }
 
   #post-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 }

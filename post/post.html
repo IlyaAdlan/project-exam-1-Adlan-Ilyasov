@@ -4,24 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Post Details</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <script type="module" src="post.js"></script>
-    <script type="module" src="edit.js"></script>
+    <script type="module" src="/script.js"></script>
   </head>
   <body>
     <header>
       <nav>
         <a href="/index.html">Home</a>
+        <a href="/account/login.html">Login</a>
+        <a href="/account/register.html">Register</a>
+        <a href="/post/edit.html">Edit</a>
       </nav>
     </header>
 
-    <main id="post-container">
+    <main id="post-content">
       <h1 id="post-title"></h1>
       <img id="post-image" src="" alt="Post Image" />
       <p id="post-body"></p>
     </main>
 
-    <footer></footer>
-    <script type="module" src="post.js"></script>
+    <footer>
+      <div class="footer-content">
+        <p>In every walk with nature, one receives far more than he seeks.</p>
+      </div>
+    </footer>
   </body>
 </html>
