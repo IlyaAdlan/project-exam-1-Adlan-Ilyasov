@@ -1,4 +1,4 @@
-# Nature's 
+# Nature's Path
 
 ![image](file:///C:/Users/ADNAN/Pictures/rainy_days_upper_half.png)
 
