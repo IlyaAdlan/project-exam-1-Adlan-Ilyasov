@@ -1,6 +1,5 @@
 # Nature's Path
 
-![image](file:///C:/Users/ADNAN/Pictures/rainy_days_upper_half.png)
 
 A website to view blog posts about our human nature. Here you can look at what you like to see.
 Every blog posts has all the information you need if you're intrested.
